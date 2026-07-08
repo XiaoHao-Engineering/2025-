@@ -81,7 +81,6 @@ extern "C" {
 #include <ti/driverlib/dl_i2c.h>
 #include <ti/driverlib/dl_uart.h>
 #include <ti/driverlib/dl_gpio.h>
-#include <ti/driverlib/dl_sysctl.h>
 
 #ifndef SYSCONFIG_WEAK
 #define SYSCONFIG_WEAK __attribute__((weak))
