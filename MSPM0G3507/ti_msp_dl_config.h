@@ -75,7 +75,7 @@ extern "C" {
 /* clang-format on */
 
 /* ==== User added includes for peripheral drivers ==== */
-#include <ti/devices/msp/m0p/mspm0g3507.h>
+#include <ti/devices/msp/m0p/mspm0g350x.h>
 #include <ti/driverlib/dl_adc12.h>
 #include <ti/driverlib/dl_timer.h>
 #include <ti/driverlib/dl_i2c.h>
