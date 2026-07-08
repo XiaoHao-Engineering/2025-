@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurations>
+    <configuration id="com.ti.ccstudio.filewizard.ccxml_v1_0">
+        <connection id="com.ti.ccstudio.tiic110.tiic110_Connection">
+            <property id="com.ti.ccstudio.tiic110.tiic110_Connection.port">
+                <value>0</value>
+            </property>
+        </connection>
+        <device id="com.ti.ccstudio.deviceModel.MSPM0.MSPM0G3507">
+            <property id="com.ti.ccstudio.deviceModel.MSPM0.MSPM0G3507.devType">
+                <value>MSPM0G3507</value>
+            </property>
+        </device>
+        <fileVersion id="1.4.0.0"/>
+    </configuration>
+</configurations>
