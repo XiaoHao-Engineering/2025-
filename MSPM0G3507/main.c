@@ -214,7 +214,7 @@ static void State_Done(void)
   * @brief  主函数
   * @note   系统初始化后进入大循环，由TIMB定时器中断同步控制周期
   */
-void main(void)
+int main(void)
 {
     System_Init();
 

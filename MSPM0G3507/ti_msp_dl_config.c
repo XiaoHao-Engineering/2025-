@@ -25,8 +25,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
 SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 {
     /* PB0-PB1: TIMA0_C0/C1 motor PWM */
-    DL_GPIO_initPeripheralFunction(IOMUX_PINCM16, IOMUX_PINCM_FUNC_TIMER);
-    DL_GPIO_initPeripheralFunction(IOMUX_PINCM17, IOMUX_PINCM_FUNC_TIMER);
+    DL_GPIO_initPeripheralFunction(IOMUX_PINCM16, 1);
+    DL_GPIO_initPeripheralFunction(IOMUX_PINCM17, 1);
     /* PB2-PB6: motor dir + STBY as GPIO output */
     DL_GPIO_initDigitalOutput(IOMUX_PINCM18);
     DL_GPIO_initDigitalOutput(IOMUX_PINCM19);
@@ -34,16 +34,16 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initDigitalOutput(IOMUX_PINCM21);
     DL_GPIO_initDigitalOutput(IOMUX_PINCM22);
     /* PC0-PC1: I2C1 for OLED */
-    DL_GPIO_initPeripheralFunction(IOMUX_PINCM32, IOMUX_PINCM_FUNC_I2C);
-    DL_GPIO_initPeripheralFunction(IOMUX_PINCM33, IOMUX_PINCM_FUNC_I2C);
+    DL_GPIO_initPeripheralFunction(IOMUX_PINCM32, 1);
+    DL_GPIO_initPeripheralFunction(IOMUX_PINCM33, 1);
     /* PC2-PC3: buttons with pullup */
     DL_GPIO_initDigitalInput(IOMUX_PINCM34, IOMUX_PINCM_INPUT_ENABLE);
     DL_GPIO_enablePullUp(GPIOC, GPIO_PIN_2);
     DL_GPIO_initDigitalInput(IOMUX_PINCM35, IOMUX_PINCM_INPUT_ENABLE);
     DL_GPIO_enablePullUp(GPIOC, GPIO_PIN_3);
     /* PA8-PA9: UART1 for STM32 */
-    DL_GPIO_initPeripheralFunction(IOMUX_PINCM8, IOMUX_PINCM_FUNC_UART);
-    DL_GPIO_initPeripheralFunction(IOMUX_PINCM9, IOMUX_PINCM_FUNC_UART);
+    DL_GPIO_initPeripheralFunction(IOMUX_PINCM8, 1);
+    DL_GPIO_initPeripheralFunction(IOMUX_PINCM9, 1);
 }
 
 SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
@@ -76,24 +76,44 @@ SYSCONFIG_WEAK void SYSCFG_DL_ADC12_0_init(void)
 }
 
 /* TIMA0: 10kHz PWM for TB6612 motor drive */
+static const DL_TimerA_ClockConfig gMOTORTIM_ClockConfig = {
+    .clockSource = DL_TIMER_CLOCK_SOURCE_BUSCLK,
+    .divideRatio = DL_TIMER_CLOCK_DIVIDE_4,
+};
+static const DL_TimerA_UpModeConfig gMOTORTIM_UpModeConfig = {
+    .period = 999,
+    .startOnReset = false,
+    .cyclicPeriodOutput = false,
+    .periodInterruptEnable = false,
+    .direction = DL_TIMER_DIRECTION_UP,
+};
+static const DL_TimerA_CaptureCompareConfig gMOTORTIM_CCConfig = {
+    .captureCompareOutput = DL_TIMER_CC_OUTPUT_DISABLE,
+    .captureCompareInput = DL_TIMER_CC_INPUT_DISABLE,
+    .outputPolarity = DL_TIMER_CC_OUTPUT_POLARITY_HIGH,
+};
+
 SYSCONFIG_WEAK void SYSCFG_DL_TIMER_init(void)
 {
     DL_TimerA_initUpMode(MOTOR_TIM_INST,
-        DL_TIMER_CLOCK_DIVIDE_4, 999,
-        DL_TIMER_CONTROL_MODE_EDGE_ALIGN_WITH_COMPARE_ONLY);
-    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_0);
-    DL_TimerA_setCaptureCompareValue(MOTOR_TIM_INST, 0, DL_TIMERA_MUX_MATCH_0);
-    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_1);
-    DL_TimerA_setCaptureCompareValue(MOTOR_TIM_INST, 0, DL_TIMERA_MUX_MATCH_1);
+        (DL_TimerA_ClockConfig*)&gMOTORTIM_ClockConfig,
+        (DL_TimerA_UpModeConfig*)&gMOTORTIM_UpModeConfig,
+        (DL_TimerA_CaptureCompareConfig*)&gMOTORTIM_CCConfig);
+    DL_TimerA_setCaptureCompareValue(MOTOR_TIM_INST, DL_TIMERA_CC_0_INDEX, 0);
+    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_CC_0_INDEX);
+    DL_TimerA_setCaptureCompareValue(MOTOR_TIM_INST, DL_TIMERA_CC_1_INDEX, 0);
+    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_CC_1_INDEX);
     DL_TimerA_enableStart(MOTOR_TIM_INST);
 }
 
 /* I2C1: 100kHz for SSD1306 OLED */
 SYSCONFIG_WEAK void SYSCFG_DL_I2C_init(void)
 {
-    DL_I2C_init(OLED_I2C_INST,
-        DL_I2C_CONTROLLER_MAX_TIMEOUT_DISABLE,
-        DL_I2C_CONTROLLER_CLOCK_100KHZ);
+    DL_I2C_ControllerConfig i2cCfg = {
+        .baudRate = DL_I2C_CONTROLLER_BAUDRATE_100KHZ,
+        .enableHLK = false,
+    };
+    DL_I2C_initController(OLED_I2C_INST, &i2cCfg);
 }
 
 /* UART1: 115200-8N1 to STM32 */

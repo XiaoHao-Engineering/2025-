@@ -23,7 +23,7 @@ static void OLED_WriteCmd(uint8_t cmd)
     data[0] = 0x00;  /* 控制字节：命令模式 */
     data[1] = cmd;
     DL_I2C_fillControllerTXFIFO(OLED_I2C_INST, data, 2);
-    while (DL_I2C_isControllerBusy(OLED_I2C_INST));
+    for (volatile int _b=0;_b<1000;_b++);
 }
 
 /**
@@ -36,7 +36,7 @@ static void OLED_WriteData(uint8_t dat)
     data[0] = 0x40;  /* 控制字节：数据模式 */
     data[1] = dat;
     DL_I2C_fillControllerTXFIFO(OLED_I2C_INST, data, 2);
-    while (DL_I2C_isControllerBusy(OLED_I2C_INST));
+    for (volatile int _b=0;_b<1000;_b++);
 }
 
 /**

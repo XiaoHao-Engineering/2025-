@@ -21,7 +21,7 @@ void UART_Init(void)
     DL_UART_enable(UART_INST);
 
     /* 清空接收FIFO */
-    DL_UART_flushRXFIFO(UART_INST);
+    
 }
 
 /**

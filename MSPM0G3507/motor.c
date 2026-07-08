@@ -18,8 +18,8 @@
 void MOTOR_Init(void)
 {
     /* PWM定时器由SysConfig配置，此处使能PWM输出 */
-    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_0);
-    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_1);
+    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_CC_0_INDEX);
+    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_CC_1_INDEX);
 
     /* 设置STBY为高电平，使能TB6612 */
     DL_GPIO_setPins(MOTOR_STBY_PORT, MOTOR_STBY_PIN);
