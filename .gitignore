@@ -56,4 +56,9 @@ Thumbs.db
 !*.jpg
 # But keep projectspec files and target configs for CCS
 !*.projectspec
-!targetConfigs/
+# But keep CCS project files in MSPM0G3507 folder
+!/MSPM0G3507/.project
+!/MSPM0G3507/.cproject
+!/MSPM0G3507/.ccsproject
+!/MSPM0G3507/targetConfigs/
+!/MSPM0G3507/*.projectspec

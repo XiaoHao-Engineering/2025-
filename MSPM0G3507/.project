@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+    <name>2026E_LineFollower</name>
+    <comment>2026电赛 E题 简易自行瞄准装置 - MSPM0G3507</comment>
+    <projects/>
+    <buildSpec>
+        <buildCommand>
+            <name>org.eclipse.cdt.managedbuilder.core.genmakebot</name>
+            <triggers>clean,full,incremental,auto</triggers>
+            <arguments/>
+        </buildCommand>
+        <buildCommand>
+            <name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
+            <triggers>full,incremental</triggers>
+            <arguments/>
+        </buildCommand>
+    </buildSpec>
+    <natures>
+        <nature>com.ti.ccstudio.core.ccsNature</nature>
+        <nature>org.eclipse.cdt.core.cnature</nature>
+        <nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+        <nature>com.ti.ccstudio.core.managedbuildnature</nature>
+        <nature>com.ti.ccstudio.core.ccsProjectNature</nature>
+    </natures>
+</projectDescription>
