@@ -1,98 +1,77 @@
-/**
-  *************************************************************
+﻿/**
+  *****************************************************************
   * @file     grayscale.c
   * @author   2026电赛 E题 小组
   * @brief    8路灰度传感器 模块实现
-  *           基于MSPM0G3507 DriverLib的ADC12模块
-  *************************************************************
+  *           SDK 2.10 正确API: configConversionMem + startConversion + getMemResult
+  *****************************************************************
   */
 
-#include "grayscale.h"
-#include "ti_msp_dl_config.h"   /* SysConfig生成的头文件 */
+#include \"grayscale.h\"
+#include \"ti_msp_dl_config.h\"
 
-/* ADC12模块句柄（由SysConfig生成，在ti_msp_dl_config.h中声明）*/
-
-/**
-  * @brief  初始化8路灰度ADC
-  * @note   SysConfig已配置ADC0_IN0~IN7，本函数仅使能ADC模块
-  */
 void GRAY_Init(void)
 {
-    /* SysConfig已生成DL_ADC12_init()，直接使能即可 */
-    DL_ADC12_enableConversions(GRAY_ADC_INST);
+    /* ADC配置已在 ti_msp_dl_config.c 中完成 */
+    DL_ADC12_clearInterruptStatus(GRAY_ADC_INST, DL_ADC12_INTERRUPT_MEM0_RESULT_LOADED);
 }
 
-/**
-  * @brief  读取全部8路灰度值
-  * @param  buf : 存放8路原始ADC值的数组首地址
-  */
 void GRAY_ReadAll(uint16_t *buf)
 {
-    uint8_t i;
-    uint32_t result;
-
-    for (i = 0; i < GRAY_CHANNEL_NUM; i++)
+    for (uint8_t i = 0; i < GRAY_CHANNEL_NUM; i++)
     {
-        /* 选择ADC通道 */
-        DL_ADC12_setChannelMux(GRAY_ADC_INST, DL_ADC12_CHANNEL_0 + i);
+        /* 重新配置MEM0切换通道 */
+        DL_ADC12_configConversionMem(GRAY_ADC_INST, GRAY_ADCMEM_0,
+            DL_ADC12_INPUT_CHAN_0 + i,
+            DL_ADC12_REFERENCE_VOLTAGE_VDDA,
+            DL_ADC12_SAMPLE_TIMER_SOURCE_SCOMP0,
+            DL_ADC12_AVERAGING_MODE_DISABLED,
+            DL_ADC12_BURN_OUT_SOURCE_DISABLED,
+            DL_ADC12_TRIGGER_MODE_AUTO_NEXT,
+            DL_ADC12_WINDOWS_COMP_MODE_DISABLED);
+
+        /* 启动转换 */
         DL_ADC12_startConversion(GRAY_ADC_INST);
 
-        /* 等待转换完成 */
-        while (!DL_ADC12_isConversionComplete(GRAY_ADC_INST));
+        /* 等待转换完成（轮询中断标志）*/
+        while (DL_ADC12_getPendingInterrupt(GRAY_ADC_INST) != DL_ADC12_IIDX_MEM0_RESULT_LOADED);
 
-        /* 读取转换结果 */
-        result = DL_ADC12_getMemResult(GRAY_ADC_INST, DL_ADC12_MEM_IDX_0);
-        buf[i] = (uint16_t)result;
+        /* 读取结果 */
+        buf[i] = (uint16_t)DL_ADC12_getMemResult(GRAY_ADC_INST, GRAY_ADCMEM_0);
+
+        /* 清除中断标志 */
+        DL_ADC12_clearInterruptStatus(GRAY_ADC_INST, DL_ADC12_INTERRUPT_MEM0_RESULT_LOADED);
     }
 }
 
-/**
-  * @brief  计算加权偏差值
-  * @param  buf : 8路原始ADC值数组
-  * @retval int16_t 偏差 (-100 ~ +100)
-  */
 int16_t GRAY_GetDeviation(const uint16_t *buf)
 {
     uint8_t i;
     float weightedSum = 0.0f;
     float totalValue  = 0.0f;
-    float deviation;
 
-    /* 加权偏差计算：中心为索引3.5(介于3和4之间) */
     for (i = 0; i < GRAY_CHANNEL_NUM; i++)
     {
         weightedSum += (float)(i - 3.5f) * (float)buf[i];
         totalValue  += (float)buf[i];
     }
 
-    /* 防止除零 */
-    if (totalValue < 0.1f)
-        return 0;
+    if (totalValue < 0.1f) return 0;
 
-    deviation = (weightedSum / totalValue) * 100.0f;
-
-    /* 限幅到 -100 ~ +100 */
+    float deviation = (weightedSum / totalValue) * 100.0f;
     if (deviation > 100.0f)  deviation = 100.0f;
     if (deviation < -100.0f) deviation = -100.0f;
 
     return (int16_t)deviation;
 }
 
-/**
-  * @brief  判断是否进入直角弯区域
-  * @param  buf : 8路原始ADC值数组
-  * @retval 0=非直角，1=检测到直角
-  */
 uint8_t GRAY_IsCorner(const uint16_t *buf)
 {
-    uint8_t i;
     uint8_t blackCount = 0;
-
-    for (i = 0; i < GRAY_CHANNEL_NUM; i++)
+    for (uint8_t i = 0; i < GRAY_CHANNEL_NUM; i++)
     {
         if (buf[i] > GRAY_BLACK_THRESHOLD)
             blackCount++;
     }
-
     return (blackCount >= GRAY_CORNER_THRESHOLD) ? 1 : 0;
 }

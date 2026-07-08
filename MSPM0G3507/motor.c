@@ -18,8 +18,8 @@
 void MOTOR_Init(void)
 {
     /* PWM定时器由SysConfig配置，此处使能PWM输出 */
-    DL_TIMERA_enableCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_0);
-    DL_TIMERA_enableCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_1);
+    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_0);
+    DL_TimerA_enableCaptureCompareOutput(MOTOR_TIM_INST, DL_TIMERA_MUX_GENERATOR_1);
 
     /* 设置STBY为高电平，使能TB6612 */
     DL_GPIO_setPins(MOTOR_STBY_PORT, MOTOR_STBY_PIN);
@@ -70,9 +70,9 @@ static void MOTOR_SetOneMotor(int16_t speed,
     pwmValue = (uint16_t)((uint32_t)speed * MOTOR_PWM_MAX / MOTOR_SPEED_MAX);
 
     if (gen == DL_TIMERA_MUX_GENERATOR_0)
-        DL_TIMERA_setCompareValue(pwm_inst, DL_TIMERA_MUX_MATCH_0, pwmValue);
+        DL_TimerA_setCaptureCompareValue(pwm_inst, DL_TIMERA_MUX_MATCH_0, pwmValue);
     else
-        DL_TIMERA_setCompareValue(pwm_inst, DL_TIMERA_MUX_MATCH_1, pwmValue);
+        DL_TimerA_setCaptureCompareValue(pwm_inst, DL_TIMERA_MUX_MATCH_1, pwmValue);
 }
 
 /**
@@ -105,6 +105,6 @@ void MOTOR_Stop(void)
     DL_GPIO_clearPins(MOTOR_BIN2_PORT, MOTOR_BIN2_PIN);
 
     /* PWM归零 */
-    DL_TIMERA_setCompareValue(MOTOR_TIM_INST, DL_TIMERA_MUX_MATCH_0, 0);
-    DL_TIMERA_setCompareValue(MOTOR_TIM_INST, DL_TIMERA_MUX_MATCH_1, 0);
+    DL_TimerA_setCaptureCompareValue(MOTOR_TIM_INST, DL_TIMERA_MUX_MATCH_0, 0);
+    DL_TimerA_setCaptureCompareValue(MOTOR_TIM_INST, DL_TIMERA_MUX_MATCH_1, 0);
 }
