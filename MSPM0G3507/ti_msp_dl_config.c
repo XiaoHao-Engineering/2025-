@@ -1,4 +1,4 @@
-﻿#include \"ti_msp_dl_config.h\"
+#include "ti_msp_dl_config.h"
 
 SYSCONFIG_WEAK void SYSCFG_DL_init(void)
 {

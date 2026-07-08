@@ -1,4 +1,4 @@
-﻿/**
+/**
   *****************************************************************
   * @file     grayscale.c
   * @author   2026电赛 E题 小组
@@ -7,8 +7,8 @@
   *****************************************************************
   */
 
-#include \"grayscale.h\"
-#include \"ti_msp_dl_config.h\"
+#include "grayscale.h"
+#include "ti_msp_dl_config.h"
 
 void GRAY_Init(void)
 {
