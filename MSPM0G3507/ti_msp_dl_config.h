@@ -53,7 +53,6 @@
 
 #include <ti/devices/msp/msp.h>
 #include <ti/driverlib/driverlib.h>
-#include <ti/driverlib/m0p/dl_core.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -67,18 +66,13 @@ extern "C" {
  *  MSP DL.
  */
 
-
 /* clang-format off */
 
 #define POWER_STARTUP_DELAY                                                (16)
 
-
 #define CPUCLK_FREQ                                                     40000000
 
-
-
 /* clang-format on */
-
 
 /* ==== User added includes for peripheral drivers ==== */
 #include <ti/devices/msp/m0p/mspm0g3507.h>
@@ -88,7 +82,6 @@ extern "C" {
 #include <ti/driverlib/dl_uart.h>
 #include <ti/driverlib/dl_gpio.h>
 #include <ti/driverlib/dl_sysctl.h>
-#include <ti/driverlib/m0p/dl_core.h>
 
 #ifndef SYSCONFIG_WEAK
 #define SYSCONFIG_WEAK __attribute__((weak))
@@ -110,7 +103,6 @@ void SYSCFG_DL_init(void);
 void SYSCFG_DL_initPower(void);
 void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
-
 
 #ifdef __cplusplus
 }

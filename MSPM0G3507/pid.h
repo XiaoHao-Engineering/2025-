@@ -15,7 +15,7 @@
   * @brief  PID控制器结构体
   */
 typedef struct
-+{
+{
     float Kp;           /* 比例系数 */
     float Kd;           /* 微分系数 */
     float lastError;    /* 上一次偏差，用于微分计算 */
