@@ -18,7 +18,7 @@
         compilerBuildOptions="
             -I${PROJECT_ROOT}
             -I${PROJECT_ROOT}/${ConfigName}
-            -O2
+            -O2 -D__MSPM0G3507__
             -I${COM_TI_MSPM0_SDK_INSTALL_DIR}/source/third_party/CMSIS/Core/Include
             -I${COM_TI_MSPM0_SDK_INSTALL_DIR}/source
             -gdwarf-3 -mcpu=cortex-m0plus -march=thumbv6m
