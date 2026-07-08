@@ -12,7 +12,6 @@
 #include <stdint.h>
 
 /* OLED引脚宏定义 ********************************************/
-#define OLED_I2C_INST          I2C1            /* I2C1外设 */
 #define OLED_I2C_SDA_PORT      GPIOC
 #define OLED_I2C_SDA_PIN       GPIO_PIN_0      /* PC0 - SDA */
 #define OLED_I2C_SCL_PORT      GPIOC

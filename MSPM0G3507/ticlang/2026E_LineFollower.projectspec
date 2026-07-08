@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectSpec>
+    <applicability>
+        <when>
+            <context deviceFamily="ARM" deviceId="MSPM0G3507"/>
+        </when>
+    </applicability>
+    <project
+        title="2026E_LineFollower"
+        name="2026E_LineFollower"
+        configurations="Debug"
+        toolChain="TICLANG"
+        connection="TIXDS110_Connection.xml"
+        device="MSPM0G3507"
+        ignoreDefaultDeviceSettings="true"
+        ignoreDefaultCCSSettings="true"
+        products="MSPM0-SDK"
+        compilerBuildOptions="
+            -I${PROJECT_ROOT}
+            -I${PROJECT_ROOT}/${ConfigName}
+            -O2
+            -I${COM_TI_MSPM0_SDK_INSTALL_DIR}/source/third_party/CMSIS/Core/Include
+            -I${COM_TI_MSPM0_SDK_INSTALL_DIR}/source
+            -gdwarf-3 -mcpu=cortex-m0plus -march=thumbv6m
+            -mfloat-abi=soft -mthumb -Wall
+        "
+        linkerBuildOptions="
+            -ldevice.cmd.genlibs
+            -L${COM_TI_MSPM0_SDK_INSTALL_DIR}/source
+            -L${PROJECT_ROOT}
+            -Wl,--rom_model -Wl,--warn_sections
+            -L${CG_TOOL_ROOT}/lib -llibc.a
+        "
+        sourceLookupPath="${COM_TI_MSPM0_SDK_INSTALL_DIR}/source/ti/driverlib"
+        description="2026电赛 E题 循迹小车+云台瞄准 MSPM0G3507">
+        <file path="../main.c" openOnCreation="true" excludeFromBuild="false" action="copy"/>
+        <file path="../grayscale.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../grayscale.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../pid.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../pid.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../motor.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../motor.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../lap_detect.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../lap_detect.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../key.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../key.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../oled.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../oled.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../uart_comm.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../uart_comm.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../ti_msp_dl_config.c" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+        <file path="../ti_msp_dl_config.h" openOnCreation="false" excludeFromBuild="false" action="copy"/>
+    </project>
+</projectSpec>
