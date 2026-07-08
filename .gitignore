@@ -62,3 +62,4 @@ Thumbs.db
 !/MSPM0G3507/.ccsproject
 !/MSPM0G3507/targetConfigs/
 !/MSPM0G3507/*.projectspec
+!/MSPM0G3507/ti_msp_dl_config.*

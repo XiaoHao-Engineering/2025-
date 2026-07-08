@@ -11,7 +11,6 @@
 #include "ti_msp_dl_config.h"   /* SysConfig生成的头文件 */
 
 /* ADC12模块句柄（由SysConfig生成，在ti_msp_dl_config.h中声明）*/
-extern ADC12_Regs* GRAY_ADC_INST;
 
 /**
   * @brief  初始化8路灰度ADC

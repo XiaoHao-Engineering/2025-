@@ -11,7 +11,6 @@
 #include "ti_msp_dl_config.h"
 
 /* 外部引用的UART实例（由SysConfig生成）*/
-extern UART_Regs* UART_INST;
 
 /**
   * @brief  初始化UART

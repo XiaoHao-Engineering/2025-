@@ -11,7 +11,6 @@
 #include "ti_msp_dl_config.h"
 
 /* 外部引用的TIMA0定时器句柄（由SysConfig生成）*/
-extern TIMERA_Regs* MOTOR_TIM_INST;
 
 /**
   * @brief  初始化TB6612电机驱动
