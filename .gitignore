@@ -54,9 +54,6 @@ Thumbs.db
 !*.pdf
 !*.png
 !*.jpg
-!MSPM0G3507/.project
-!MSPM0G3507/.cproject
-!MSPM0G3507/.ccsproject
-!MSPM0G3507/targetConfigs/
-!STM32F103/.project
-!STM32F103/.cproject
+# But keep projectspec files and target configs for CCS
+!*.projectspec
+!targetConfigs/

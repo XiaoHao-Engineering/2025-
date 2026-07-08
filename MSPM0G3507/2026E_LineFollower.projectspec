@@ -1,0 +1,84 @@
+{
+  "projectspec": {
+    "version": "1.0.0",
+    "name": "2026E_LineFollower",
+    "description": "2026电赛 E题 简易自行瞄准装置 MSPM0G3507 循迹小车代码",
+    "device": {
+      "id": "MSPM0G3507"
+    },
+    "toolchain": {
+      "id": "tiarmclang"
+    },
+    "outputType": "executable",
+    "files": [
+      {
+        "path": "main.c",
+        "category": "source"
+      },
+      {
+        "path": "grayscale.c",
+        "category": "source"
+      },
+      {
+        "path": "grayscale.h",
+        "category": "header"
+      },
+      {
+        "path": "pid.c",
+        "category": "source"
+      },
+      {
+        "path": "pid.h",
+        "category": "header"
+      },
+      {
+        "path": "motor.c",
+        "category": "source"
+      },
+      {
+        "path": "motor.h",
+        "category": "header"
+      },
+      {
+        "path": "lap_detect.c",
+        "category": "source"
+      },
+      {
+        "path": "lap_detect.h",
+        "category": "header"
+      },
+      {
+        "path": "key.c",
+        "category": "source"
+      },
+      {
+        "path": "key.h",
+        "category": "header"
+      },
+      {
+        "path": "oled.c",
+        "category": "source"
+      },
+      {
+        "path": "oled.h",
+        "category": "header"
+      },
+      {
+        "path": "uart_comm.c",
+        "category": "source"
+      },
+      {
+        "path": "uart_comm.h",
+        "category": "header"
+      }
+    ],
+    "includePaths": [
+      "${PROJECT_ROOT}",
+      "${COM_TI_MSPM0_SDK_PATH}/source/third_party/CMSIS/Core/Include",
+      "${COM_TI_MSPM0_SDK_PATH}/source/ti/devices/msp/m0p"
+    ],
+    "runtimeSupport": {
+      "runtime": "freestanding"
+    }
+  }
+}
