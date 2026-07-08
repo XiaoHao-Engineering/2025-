@@ -1,0 +1,56 @@
+# 2026电赛 E题 CCS + STM32 + OpenMV 项目 .gitignore
+
+# CCS / TI IDE build artifacts
+Debug/
+Release/
+*.obj
+*.out
+*.hex
+*.map
+*.txt
+syscfg/
+ti_msp_dl_config.c
+ti_msp_dl_config.h
+
+# STM32CubeIDE / Keil build artifacts
+STM32F103/Debug/
+STM32F103/Release/
+STM32F103/MDK-ARM/
+STM32F103/*.uvguix.*
+STM32F103/*.uvoptx
+STM32F103/*.scvd
+STM32F103/Listings/
+STM32F103/Objects/
+STM32F103/*.dep
+STM32F103/JLinkLog.txt
+
+# OpenMV temp
+OpenMV/__pycache__/
+OpenMV/*.pyc
+
+# General
+*.o
+*.d
+*.crf
+*.lnp
+*.htm
+.settings/
+.project
+.cproject
+.launches/
+build/
+*.bak
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Keep user source files
+!*.c
+!*.h
+!*.py
+!*.md
+!*.txt
+!*.pdf
+!*.png
+!*.jpg
